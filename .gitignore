@@ -1,22 +1,13 @@
 # Ignore folder contoh
 contoh/
-fullPieces/
-gambangAMT/soundfiles/**/fullPieces/**/
-
-#fullPieces/
-
-#gambangAMT/soundfiles/**/**/sections/cading/
-#fullPieces/**/*.wav
-
 
 # Ignore full Pieces folder
-gambangAMT/soundfiles/NAGi/rec_2021-11-19/fullPieces/
-gambangAMT/soundfiles/**/fullPieces/**/*.wav
+fullPieces/
 
 # Ignore sections other than kilitan
 
-gambangAMT/soundfiles/NAGi/rec_2021-11-19/sections/cading/
-gambangAMT/soundfiles/NAGi/rec_2021-11-19/sections/cadingNoGangsa/
-gambangAMT/soundfiles/NAGi/rec_2021-11-19/sections/cue/
-gambangAMT/soundfiles/NAGi/rec_2021-11-19/sections/kawitan/
-gambangAMT/soundfiles/NAGi/rec_2021-11-19/sections/penyuud/
+gambangAMT/soundfiles/**/cading/
+gambangAMT/soundfiles/**/cadingNoGangsa/
+gambangAMT/soundfiles/**/cue/
+gambangAMT/soundfiles/**/kawitan/
+gambangAMT/soundfiles/**/penyuud/
