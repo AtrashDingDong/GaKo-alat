@@ -1,0 +1,19 @@
+# Ignore folder contoh
+"\contoh"
+/contoh
+
+# Ignore full Pieces folder
+"\gambangAMT\soundfiles\NAGi\rec_2021-11-19\fullPieces"
+/gambangAMT/soundfiles/NAGi/rec_2021-11-19/fullPieces
+
+# Ignore sections other than kilitan
+"\gambangAMT\soundfiles\NAGi\rec_2021-11-19\sections\cading"
+/gambangAMT/soundfiles/NAGi/rec_2021-11-19/sections/cading
+"\gambangAMT\soundfiles\NAGi\rec_2021-11-19\sections\cadingNoGangsa"
+/gambangAMT/soundfiles/NAGi/rec_2021-11-19/sections/cadingNoGangsa
+"\gambangAMT\soundfiles\NAGi\rec_2021-11-19\sections\cue"
+/gambangAMT/soundfiles/NAGi/rec_2021-11-19/sections/cue
+"\gambangAMT\soundfiles\NAGi\rec_2021-11-19\sections\kawitan"
+/gambangAMT/soundfiles/NAGi/rec_2021-11-19/sections/kawitan
+"\gambangAMT\soundfiles\NAGi\rec_2021-11-19\sections\penyuud"
+/gambangAMT/soundfiles/NAGi/rec_2021-11-19/sections/penyuud
