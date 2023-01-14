@@ -1,0 +1,10 @@
+#N canvas 2664 191 450 257 12;
+#X msg 267 100 \; pd dsp 1 \;;
+#X msg 269 165 \; pd dsp 0 \;;
+#X text 156 17 MENGHIDUPKAN BUNYI;
+#X text 266 80 Klik untuk hidupkan;
+#X text 266 144 Klik untuk matikan;
+#X text 28 50 Media/Pengaturan audio;
+#X text 28 76 Media/DSP on/off;
+#X text 197 78 atau;
+#X text 26 211 Media/Mencoba audio dan MIDI;
