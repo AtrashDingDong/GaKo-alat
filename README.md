@@ -4,6 +4,8 @@
 **Proyek ini masih dalam tahap pengembangan.**
 
 * gambangAMT adalah sebuah alat untuk membuat notasi gamelan gambang otomatis melewati Max/MSP (https://cycling74.com/) dan perpustakaan Fluid Corpus Manipulation (https://www.flucoma.org/).
+
+* NAGiMelajah2 adalah sebuah workshop tentang "creative coding" dengan perspektif gamelan Bali. Di folder ini akan ketemu dengan materi yang kita buat bersama dan materi pendukung menggunakan Pure Data (https://puredata.info/) dan SuperCollider (https://supercollider.github.io/).
   
 * Lebih banyak alat-alat segera datang ...
 
