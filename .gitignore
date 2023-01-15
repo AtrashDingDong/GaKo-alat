@@ -1,6 +1,3 @@
-# Ignore folder contoh
-contoh/
-
 # Ignore full Pieces folder
 fullPieces/
 
@@ -11,3 +8,7 @@ gambangAMT/soundfiles/**/cadingNoGangsa/
 gambangAMT/soundfiles/**/cue/
 gambangAMT/soundfiles/**/kawitan/
 gambangAMT/soundfiles/**/penyuud/
+
+# Ignore kilitan 2 and 3
+gambangAMT/soundfiles/**/kilitan/semtk2_kilitan2_*.wav
+gambangAMT/soundfiles/**/kilitan/semtk2_kilitan3_*.wav

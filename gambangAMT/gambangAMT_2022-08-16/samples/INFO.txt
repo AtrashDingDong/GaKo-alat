@@ -1,8 +1,11 @@
 Samples recorded by Zachary Hejny
-From the gambang gamelan ensemble in Kerobokan, Badung, at sanggar seni Naradha Gita
+From Sanggar Seni naradha Gita gambang gamelan ensemble in Kerobokan, Badung
+For personal use only, to enable trying the algorithm.
+No distribution or modification permitted.
+
 gangsaG = gangsa ageng (gede)
 gangsaC = gangsa alit (cenik)
 gambangD = cungklik pengede (pengenter)
 gambangC = cungklik pemero
-ganbangB = cungklik penyelat
+gambangB = cungklik penyelat
 gambangA = cungklik pemetit
