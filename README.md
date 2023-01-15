@@ -2,6 +2,7 @@
 ## ---BAHASA INDONESIA---
 ### Gamelan Komputer alat-alat: Beberapa alat untuk menciptakan karya musik komputer yang terinspirasi dari gamelan Bali
 **Proyek ini masih dalam tahap pengembangan.**
+**Untuk unduh hanya satu folder, tempel URL disini (https://minhaskamal.github.io/DownGit/#/home) dan unduh .zip filenya.**
 
 * gambangAMT adalah sebuah alat untuk membuat notasi gamelan gambang otomatis melewati Max/MSP (https://cycling74.com/) dan perpustakaan Fluid Corpus Manipulation (https://www.flucoma.org/).
 
