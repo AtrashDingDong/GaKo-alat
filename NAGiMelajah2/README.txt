@@ -1,7 +1,11 @@
 GaKo-alat
 Belajar Kelompok 2023
 
-Perangkat lunak:
+Links:
+Untuk berkontribusi pada terjemahan PureData ke bahasa indonesia
+https://hosted.weblate.org/projects/pure-data/pure-data/
+
+Software:
 (Semua gratis)
 
 Pure Data
@@ -17,13 +21,13 @@ https://processing.org/
 
 Wekinator
 http://www.wekinator.org/downloads/
-oleh rebecca Fiebrinck
+oleh Rebecca Fiebrinck
 
 Sensor2OSC (HP)
 https://sensors2.org/osc/#downloads
-Download di HP (Google Play, F-Droid)
+Unduh di HP (Google Play, F-Droid)
 
-Eksternal:
+Eksternal/Perpustakaan:
 
 MrPeach Pd externals
 Langsung di Pure Data
@@ -35,7 +39,7 @@ Langsung di Pure Data
 hidio Pd externals
 Langsung di Pure Data
 
-....P3
+....P3 externals
 
 
 Perangkat lunak lain yang berguna:
@@ -73,24 +77,32 @@ Max/MSP (gratis 30 hari)
 (Bahasa programming grafik)
 https://cycling74.com/downloads
 
-Drivers (soundcard)
-
 FluCoMa Pd/SC externals
+(Analisa suara)
 https://www.flucoma.org/download/
 oleh University of Huddersfield
 
 ASIO4All
+(Driver audio)
 https://www.asio4all.org/
 oleh Michael Tippach
 
 ReaRoute
+(DAW kabel dalam)
 (+ make file rearoute.ini in Reaper folder, next to rearoute.dll
 [rearoute]
 numasioins=64
 numasioouts=64
 )
-Download sambil download reaper
+Unduh ReaRoute sambil unduh reaper
 https://wiki.cockos.com/wiki/index.php/ReaRoute
+
+Notepad++
+(Notepad untuk catatan yang cocok dengan programming)
+https://notepad-plus-plus.org/
+oleh Don Ho
+
+Drivers (soundcard)
 
 
 
