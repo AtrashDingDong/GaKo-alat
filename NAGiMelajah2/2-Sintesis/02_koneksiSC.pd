@@ -71,13 +71,16 @@
 #X text 61 765 Protokol kirim pesan \, format pesan standar;
 #X text 60 781 nada - velocity;
 #X text 61 681 nada - velocity - instrumen - ngumbag/isep;
-#X obj 426 692 s OSC;
 #X text 757 453 4 Unduh Mrpeach;
 #X obj 150 611 gakoOSCkirimSC;
 #X text 756 438 3 Tambah gakoOSCkirimSC;
 #X text 757 468 5 Start \, lihat post window;
 #X text 59 798 Lihat pesan di media-test MIDI;
 #X text 61 700 Lihat gambar OSC;
+#X obj 426 763 s OSC;
+#X msg 426 734 /GaKo-Synth/nada \$1 \$2 \$3 \$4;
+#X text 640 724 /GaKo-Synth/nada noNada vel noInstr dua(0)/pengumbang(1)/pengisep(2);
+#X text 445 714 pesan OSC;
 #X connect 1 0 8 0;
 #X connect 2 0 1 0;
 #X connect 2 0 7 1;
@@ -93,6 +96,7 @@
 #X connect 11 3 15 0;
 #X connect 11 4 16 0;
 #X connect 18 0 2 0;
-#X connect 61 0 72 0;
+#X connect 61 0 79 0;
 #X connect 62 0 63 0;
 #X connect 63 0 61 1;
+#X connect 79 0 78 0;
