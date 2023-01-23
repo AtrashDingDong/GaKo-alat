@@ -1,0 +1,4 @@
+Unduh SuperCollider
+https://supercollider.github.io/
+
+Install class GaKo sebelum buka SC (atau Ctl + shift + L untuk recompile)

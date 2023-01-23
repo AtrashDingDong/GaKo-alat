@@ -1,12 +1,16 @@
-//Path des classes externals
+
+// Jalan "classes" (kelas) eksternal
+// Taruh GaKoSynth.sc di dalam folder itu
 Platform.userExtensionDir;
+//Ctl + Shift + L untuk recompile kalau ada masalah
+
 //TODO: mettre la classe dans le dossier local, tout local, rien système
 //TODO: create helpfiles .schelp
 //TODO: check language .id
 //TODO: instr accessible from outside
-//error: Message addInstr not understood
-
-
+//TODO: add pan
+//TODO: setter from outside c.saih_
+//TODO: GUI reste pas au dessus
 
 c.saih;
 c.ombak;
@@ -20,6 +24,7 @@ c.amp;
 c.instr[8];
 ~instrTest = c.instr[8].at(\ratioSlider);
 ~instrTest.value;
+this.inspect;
 
 c.nbInstr;//TODO: faire methode pour retourner le nb instr (tracks)
 c.nbNotes;//TODO: faire une methode pour retourner le nbNotes quand on le change de dedans le GUI
@@ -28,12 +33,14 @@ c.close;
 //ca ca marche pas, message .saih_ not understood. peut set and get de l'extérieur? ou juste get?
 c.saih_([20,21,22,23,24,25,26,27,28,29]);
 
-Window.browse;
-
 //TODO: output option: to SC. to Reaper? si to Reaper, peut send les stems vers des tracks séparées = FX, record. Sinon, record à partir des options SC: server/start recording. OU faire avec s.record(numChans); look into ReaRoute? stuff
 //TODO: faire un mixer général? un compresseur/limiteur général?
 
+//*****************************MULAI******************MULAI*********************MULAI************************MULAI***************************************
+//1. Coba GaKoSynth.new
 GaKoSynth.new;
+//2. Coba GaKoSynth.new(..,..)
+GaKoSynth.new(30,10);
 
 (
 ~nbOutputs = 2;
@@ -47,58 +54,60 @@ c = GaKoSynth.new(~nbNotes, ~nbInstr);
 //donner des défauts si l'utilisateur ne met pas l,argument
 
 
-
-
-
-//*************************************************OSC*******************************
-//*****RECEIVE
-OSCFunc.trace(true);//montre tous les messages qui rentrent dans sc
-OSCFunc.trace(false);
-
 //***************SYNTH***************************
 
 //--GELOMBANG
 SynthDef.new(\gelombang_sine, {
-	arg freq=200, amp=0.3, dur=1.0, atk=0.01, curve=4.0;
+	arg freq=200, amp=0.3, dur=1.0, atk=0.01, curve=4.0, pan=0.0, width=2.0;
 	var sig, env, out;
 	curve = curve * (-1);
 	sig = SinOsc.ar(freq);
 	env = EnvGen.kr(Env.perc(atk, dur, 1.0, curve), doneAction:2);
 	sig = sig * env * amp;
-	out = Array.fill(~nbOutputs, {arg i; i});//Fills all channels
+	//out = Array.fill(~nbOutputs, {arg i; i});//Fills all channels
+	out = 0;//ntk Pan2.ar
+	sig = Pan2.ar(sig, pan);//ntk Pan2.ar
 	Out.ar(out, sig);
+	//out =PanX.ar(~nbOutputs, sig, pan, width);//TODO: try with PanX ou PanAz
 }).add;
 
+
 SynthDef.new(\gelombang_segitiga, {
-	arg freq=200, amp=0.3, dur=1.0, atk=0.01, curve=4.0;
+	arg freq=200, amp=0.3, dur=1.0, atk=0.01, curve=4.0, pan=0.0;
 	var sig, env, out;
 	curve = curve * (-1);
 	sig = LFTri.ar(freq);
 	env = EnvGen.kr(Env.perc(atk, dur, 1.0, curve), doneAction:2);
 	sig = sig * env * amp;
-	out = Array.fill(~nbOutputs, {arg i; i});//Fills all channels
+	//out = Array.fill(~nbOutputs, {arg i; i});//Fills all channels
+	out = 0;//ntk Pan2.ar
+	sig = Pan2.ar(sig, pan);//ntk Pan2.ar
 	Out.ar(out, sig);
 }).add;
 
 SynthDef.new(\gelombang_gigiGergaji, {
-	arg freq=200, amp=0.3, dur=1.0, atk=0.01, curve=4.0;
+	arg freq=200, amp=0.3, dur=1.0, atk=0.01, curve=4.0, pan=0.0;
 	var sig, env, out;
 	curve = curve * (-1);
 	sig = LFSaw.ar(freq);
 	env = EnvGen.kr(Env.perc(atk, dur, 1.0, curve), doneAction:2);
 	sig = sig * env * amp;
-	out = Array.fill(~nbOutputs, {arg i; i});//Fills all channels
+	//out = Array.fill(~nbOutputs, {arg i; i});//Fills all channels
+	out = 0;//ntk Pan2.ar
+	sig = Pan2.ar(sig, pan);//ntk Pan2.ar
 	Out.ar(out, sig);
 }).add;
 
 SynthDef.new(\gelombang_kebisingan, {
-	arg freq=200, amp=0.3, dur=1.0, atk=0.01, curve=4.0;
+	arg freq=200, amp=0.3, dur=1.0, atk=0.01, curve=4.0, pan=0.0;
 	var sig, env, out;
 	curve = curve * (-1);
 	sig = LFPulse.ar(freq);
 	env = EnvGen.kr(Env.perc(atk, dur, 1.0, curve), doneAction:2);
 	sig = sig * env * amp;
-	out = Array.fill(~nbOutputs, {arg i; i});//Fills all channels
+	//out = Array.fill(~nbOutputs, {arg i; i});//Fills all channels
+	out = 0;//ntk Pan2.ar
+	sig = Pan2.ar(sig, pan);//ntk Pan2.ar
 	Out.ar(out, sig);
 }).add;
 
@@ -106,20 +115,22 @@ SynthDef.new(\gelombang_kebisingan, {
 
 //TODO: add reyong, gangsa, cungklik, saron, gong,
 SynthDef.new(\gam_reyong1, {
-	arg freq=200, amp=0.3, dur=1.0, atk=0.01, curve=4.0;
+	arg freq=200, amp=0.3, dur=1.0, atk=0.01, curve=4.0, pan=0.0;
 	var sig, env, out;
 	curve = curve * (-1);
 	sig = SinOsc.ar(freq);
 	env = EnvGen.kr(Env.perc(atk, dur, 1.0, curve), doneAction:2);
 	sig = sig * env * amp;
-	out = Array.fill(~nbOutputs, {arg i; i});//Fills all channels
+	//out = Array.fill(~nbOutputs, {arg i; i});//Fills all channels
+	out = 0;//ntk Pan2.ar
+	sig = Pan2.ar(sig, pan);//ntk Pan2.ar
 	Out.ar(out, sig);
 }).add;
 
 //--ELEKTRO
 
 SynthDef.new(\gong_diamSibuk, {
-	arg amp=0.3, freq=45, dur=1.0, atk=0.01, curve=4.0;
+	arg amp=0.3, freq=45, dur=1.0, atk=0.01, curve=4.0, pan=0.0;
 	var sig, sig1, sig2, modulator, carrier, env, out;
 	curve = curve * (-1);
 	env = Line.kr(1,0,10.0);
@@ -131,12 +142,14 @@ SynthDef.new(\gong_diamSibuk, {
 	carrier = SinOsc.ar(freq, pi, modulator.squared * 0.7) + SinOsc.ar(freq*1.97, 1.2pi, modulator * 0.15) + SinOsc.ar(freq*3.02, 1.5pi, modulator * 0.15) + SinOsc.ar(freq*3.52, 1.7pi, modulator * 0.1);
 	sig2 = carrier * 0.5;
 	sig = Mix([sig1, sig2]) * env * amp;
-	out = Array.fill(~nbOutputs, {arg i; i});// Fills all channels
+	//out = Array.fill(~nbOutputs, {arg i; i});// Fills all channels
+	out = 0;//ntk Pan2.ar
+	sig = Pan2.ar(sig, pan);//ntk Pan2.ar
 	Out.ar(out, sig);
 }).add;
 
 SynthDef.new(\gong_tangisanBumi, {
-	arg amp=0.3, freq=45, dur=1.0, atk=0.01, curve=4.0;
+	arg amp=0.3, freq=45, dur=1.0, atk=0.01, curve=4.0, pan=0.0;
 	var sig, sig1, sig2, modulator, carrier, env, out;
 	curve = curve * (-1);
 	env = Line.kr(1,0,10.0);
@@ -148,14 +161,17 @@ SynthDef.new(\gong_tangisanBumi, {
 	carrier = SinOsc.ar(freq, pi, modulator.squared * 0.7) + SinOsc.ar(freq*1.97, 1.2pi, modulator * 0.15) + SinOsc.ar(freq*3.02, 1.5pi, modulator * 0.15) + SinOsc.ar(freq*3.52, 1.7pi, modulator * 0.1);
 	sig2 = carrier * 0.5;
 	sig = Mix([sig1, sig2]) * env * amp;
-	out = Array.fill(~nbOutputs, {arg i; i});// Fills all channels
+	//out = Array.fill(~nbOutputs, {arg i; i});// Fills all channels
+	out = 0;//ntk Pan2.ar
+	sig = Pan2.ar(sig, pan);//ntk Pan2.ar
 	Out.ar(out, sig);
 }).add;
 
-//TODOa changer, not real gangsa
+
 SynthDef.new(\pukul_pocongTinggi, {
-	arg freq=330, dur=1.0, atk=0.01, curve=4.0, ampAtk=0.2, amp1=0.4, amp2=0.35, amp=0.3, lforate=15, lfoSel=0, ampEvent=0;
+	arg freq=330, dur=1.0, atk=0.01, curve=4.0, ampAtk=0.2, amp1=0.4, amp2=0.35, amp=0.3, lforate=15, lfoSel=0, ampEvent=0, pan=0.0;
 	var sigAtk, sigOmb, sigEvent, sigEvent2, sig1, sig2, sig, envAtk, env1, env2, phase, ombak, lfo, vib, out;
+
 	curve = curve * (-1);
 	//TODO: aleatoriser les phases (cancellation de phase)
 	//TODO: limiter le freq band à 20000 (nyquist)
@@ -194,13 +210,14 @@ SynthDef.new(\pukul_pocongTinggi, {
 	sig = Mix([sigAtk, sig1, sig2, sigOmb, sigEvent, sigEvent2]) * Select.kr(lfoSel, lfo);
 	sig = FreeVerb.ar(sig, mix: 0.7, room: 1.0);
 	sig = sig * amp;//TODO: gerer le mix avec reaper
-	out = Array.fill(~nbOutputs, {arg i; i});// Fills all channels
-	//out = [0,1,2,3];
+	//out = Array.fill(~nbOutputs, {arg i; i});// Fills all channels
+	out = 0;
+	sig = Pan2.ar(sig, pan);//ntk Pan2.ar
 	Out.ar(out, sig);//TODO: modulaire 4 chan et +
 }).add;
 
 SynthDef.new(\pukul_waletTersesat, {
-	arg freq=200, amp=0.3, dur=1.0, atk=0.01, curve=4.0, impRatio=1, funkFact=1.0;
+	arg freq=200, amp=0.3, dur=1.0, atk=0.01, curve=4.0, impRatio=1, funkFact=1.0, pan=0.0;
 	var sig, env, out, sig2, sig1;
 	curve = curve * (-1);
 	sig1 = DynKlang.ar(`[
@@ -212,13 +229,15 @@ SynthDef.new(\pukul_waletTersesat, {
 	sig2 = Impulse.ar(Line.kr(freq * impRatio,0,dur), phase:0.2, mul: (0.3) );
 	env = EnvGen.kr(Env.perc(atk, dur * 2, 1.0, curve), doneAction:2);
 	sig = (sig1 + sig2) * env * amp;
-	out = Array.fill(~nbOutputs, {arg i; i});//Fills all channels
+	//out = Array.fill(~nbOutputs, {arg i; i});//Fills all channels
+	out = 0;//ntk Pan2.ar
+	sig = Pan2.ar(sig, pan);//ntk Pan2.ar
 	Out.ar(out, sig);
 }).add;
 
 SynthDef.new(\pukul_nasiPutih, {
-	arg freq=330, amp=0.3, dur=1.0, atk=0.01, curve=4.0, out=0, envLen=0.3, ampAtk=0.5, rq=0.006, phase=0.0, t_trig=1, sinLvl=0.25, triLvl=0.25, squLvl=0.25, sawLvl=0.25;
-	var sig1, sig2, sig3, sig, sigAtk, env, envAtk, envRes;
+	arg freq=330, amp=0.3, dur=1.0, atk=0.01, curve=4.0, pan=0.0, envLen=0.3, ampAtk=0.5, rq=0.006, phase=0.0, t_trig=1, sinLvl=0.25, triLvl=0.25, squLvl=0.25, sawLvl=0.25;
+	var sig1, sig2, sig3, sig, sigAtk, env, envAtk, envRes, out;
 	var rho, theta, b1, b2;
 	curve = curve * (-1);
 
@@ -276,9 +295,178 @@ SynthDef.new(\pukul_nasiPutih, {
 	sig2 = Crackle.ar(1.0, ampAtk) * envAtk;
 	sig3 = (SinOsc.ar(freq) * envRes) * 0.2;
 	sig = Mix([sigAtk, sig1, sig2, sig3]) * amp;
-	out = Array.fill(~nbOutputs, {arg i; i});// Fills all channels
+	//out = Array.fill(~nbOutputs, {arg i; i});// Fills all channels
+	out = 0;//ntk Pan2.ar
+	sig = Pan2.ar(sig, pan);//ntk Pan2.ar
 	Out.ar(out, sig);
 }).add;
+
+
+//-------------------------------------------------------SYNTHs: dari analisa samples gamelan
+
+
+
+//Taruh nama2 analisis file sample gamelan di array a
+a = Array.with("gam_cungklik1", "gam_gender1","gam_gender2","gam_gong1","gam_gong2","gam_jegog1","gam_jegog2","gam_kempur1","gam_kempur2","gam_saron1", "gam_saron2","gam_terompong1","gam_terompong2");
+
+// Put the analysis in variabeles usable by the synth
+a.size.do{
+	arg synthNo;
+	var freqsPartiel, ampsPartiel, timesPartiel;
+	var freqsMoy, atkAll, offsetAll, durAll, endAll, ampAll, atkIndivAll, freqStartDiffAll, freqEndDiffAll, atkG, occ;
+	var freqG, durG, freqsRatio;
+
+
+
+	// open file, read and put strings into array, close file.
+	//y = CSVFileReader.read(PathName(thisProcess.nowExecutingPath).parentPath ++"gangsaageng_1i_2_2023-01-05.csv",false,true).postcs;
+	y = CSVFileReader.read(PathName(thisProcess.nowExecutingPath).parentPath ++ a[synthNo] ++ ".csv",false,true).postcs;
+	//Parse the file to remove the first 4 lines created by Spear
+	y = List.fill(y.size-4, {arg i; y[i+4]});
+	//Parse the file to remove extra rows created by Spear
+	y = List.fill(y.size/2, {arg i; y[(i*2)+1]});
+
+	//Extract freqs, amps, times to different lists. Transform string to float
+	freqsPartiel = List.fill(y.size, {arg j; Array.fill(y[j].size/3, {arg i; y[j][(i*3)+1]}).asFloat });
+	ampsPartiel = List.fill(y.size, {arg j; Array.fill(y[j].size/3, {arg i; y[j][(i*3)+2]}).asFloat });
+	timesPartiel = List.fill(y.size, {arg j; Array.fill(y[j].size/3, {arg i; y[j][(i*3)]}).asFloat });
+
+	//Initialise vals
+	freqsMoy = List.newClear;
+	atkAll = List.newClear;
+	offsetAll = List.newClear;
+	durAll = List.newClear;
+	endAll = List.newClear;
+	ampAll = List.newClear;
+	atkIndivAll = List.newClear;
+	freqStartDiffAll = List. newClear;
+	freqEndDiffAll = List.newClear;
+
+	atkG = 0;
+	occ = 0;
+
+y.size.do({
+	arg j, freqMoy, freqStart, freqEnd, offset, atk, dur, start, end, amp, endIndex, freqStartDiff, freqEndDiff, atkIndiv;
+
+	//Get end of partial
+	end = timesPartiel[j].maxItem;
+	offset = timesPartiel[j][0];
+	dur = end - offset;
+	endIndex = timesPartiel[j].indexOf(end);
+	endAll.add(end);//to later find the longest end value
+	offsetAll.add(offset);
+	durAll.add(dur);
+
+	amp = ampsPartiel[j].maxItem;
+	atk = timesPartiel[j][ ampsPartiel[j].indexOf(amp) ];
+	atkIndiv = atk - offset;
+	atkIndivAll.add(atkIndiv);
+	ampAll.add(amp);
+
+	freqStart = freqsPartiel[j][0];
+	freqEnd = freqsPartiel[j][endIndex];
+	freqMoy = freqsPartiel[j].mean({arg i; i.asFloat});
+	freqsMoy.add(freqMoy);
+	freqStartDiff = freqMoy - freqStart;
+	freqEndDiff = freqMoy - freqEnd;
+	freqStartDiffAll.add(freqStartDiff);
+	freqEndDiffAll.add(freqEndDiff);
+
+	atkAll.add(atk);
+	//Check if the current attack happens more often then previous ones
+	//If yes, it is saved as the attack time that happens most often and the amount of times it happens is saved to be compared to later
+	//We want to get which attack time happens at most partials to produce a general envelope for the full sound, where the loudest moment for the most partials would be the general attacktime
+	if(atkAll.occurrencesOf(atk) > occ) {
+		atkG = atk;
+		occ = atkAll.occurrencesOf(atk);
+	};
+
+	[freqMoy, freqStartDiff, freqEndDiff, atk, amp, offset, end, dur, endIndex].postln;
+
+});
+
+//General vals
+//Fondamentale
+freqG = freqsMoy.minItem.postln;
+//verifier pas le mean mais le chiffre qui arrive le plus souvent dans les temps d'attaque
+atkG.postln;//atk most often found in diff partials
+//Duree Totale
+durG = endAll.maxItem.postln;
+//Obtenir ratio de la freq moyenne de ch partiel par rapport à la fondamentale
+freqsRatio = freqsMoy.collect({arg item, i; item/freqG}).postln;
+
+
+
+
+//----
+
+
+	//Make a synthdef from those extracted analysis variables
+	SynthDef.new(a[synthNo].asSymbol, {
+		arg freq=200, amp=0.8, dur=1.0, atk=0.01, curve=4.0, size=5, pan=0.0;// rands;//rands=Array.fill(freqsMoy.size, {arg i; 1.0});
+	var sig, env, out, sig1, envs, freqEnvs, phases;
+
+		//TODO:*****ICI: aller mettre du random "naturel", mdans chaque partiel
+		//rands = Array.fill( freqsMoy.size, {arg i; 1.0}).postln;
+	freqEnvs = Array.fill( freqsMoy.size, {
+		arg i, freqMoy;
+			freqMoy = freq * freqsRatio[i];// * rands[i];
+			EnvGen.kr( Env.new(
+			levels:[ freqMoy - freqStartDiffAll[i], freqMoy - freqEndDiffAll[i] ],
+				times:[durAll[i] * dur],// * rands[i]
+			curve:'exp'
+		).delay(offsetAll[i]),doneAction:0 );
+	});
+
+	envs = Array.fill( ampAll.size, {
+		arg i;
+		EnvGen.kr(Env.perc(
+			attackTime:atkIndivAll[i],
+				releaseTime: ( durAll[i] * dur * (0.95.rrand(1.05)) - atkIndivAll[i] ),
+			level:ampAll[i] * (0.9.rrand(1.1)),
+			curve:-2//TODO: arranger une curve semi random/exponentielle pour chaque partiel
+		).delay(offsetAll[i]),doneAction:0);
+	});
+
+
+	phases = Array.fill(ampAll.size, {arg i; pi* (0.0.rrand(1.0)) });
+
+	sig1 = DynKlang.ar(`[
+        freqEnvs,
+		envs,
+		phases
+    ]
+)*1.0;
+
+	env = EnvGen.kr( Env.new(
+			levels:[0,1,0],
+			times:[0.001, durG * dur],
+			curve:'lin'
+		).delay(0),doneAction:2 );
+
+	sig = sig1 * amp * env;
+	sig = LPF.ar(in:sig, freq:20000);
+	//out = Array.fill(~nbOutputs, {arg i; i});// Fills all channels
+	out = 0;//ntk Pan2.ar
+	sig = Pan2.ar(sig, pan);//ntk Pan2.ar
+	Out.ar(out, sig);
+}).add;
+
+
+
+};
+
+//------------------------------------------END synths analisa
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -288,14 +476,16 @@ SynthDef.new(\pukul_nasiPutih, {
 OSCdef.new(
 	\nada,
 	{
-		arg msg, time, addr, port, nn, vel, instrNo, mbangIsep;
+		arg msg, time, addr, port, nn, vel, instrNo, mbangIsep, pan;
 		["nada", msg].postln;
-		nn = msg[1];
+		nn = msg[1] - 1;
 		vel = msg[2];
 		instrNo = msg[3];
 		mbangIsep = msg[4];
-		//TODO: recevoir un 4e msg pour ngumbang-isep
-		if(vel­>0) {
+		pan = msg[5];
+
+		//Kalau nadanya vel lebih keras dari 0 DAN tidak negatif, bermain synth
+		if( (vel­>0) && (nn>=0) ) {
 
 			//c.synth[instrNo] is the selected synth for the instrument
 
@@ -308,22 +498,22 @@ OSCdef.new(
 				\freq, (c.saih[nn] * c.ratio[instrNo]) - (c.ombakArr[nn] / 2),
 				//\freq, (c.saih[nn] * c.ratio[instrNo]) +(c.ombakArr[nn]*10),//????? laisser la flexibilité de faire son propre tuning ngumban/isep ++ ? Peut émuler dewa alit?
 					//DOM: mettre cette formule dans une var, qu'on peut modifier dans la fenetre du GUI?
-					//Mettre une boite à formule dans le GUI?
-					//presets de menu déroulant?
+					//Mettre une boite à formule dans le GUI? NON
+					//presets de menu déroulant? OUI
 					//menu déroulant de combien de notes se superposent?
 					//quelle genre de relation?
 					//remplacer la ligne de formule freq par une var
-					//Relation aux math VS essai-erreur ?????????????????????? TODO: check arya
+					//Relation aux math VS essai-erreur ?????????????????????? TODO: check Yogi
 					//ombak / nb de mbang-isep?
 					//mettre un tableau sur vertical? pour changer +- 5
 					//ouvrir discussion: dessiner interface graphique qui aurait du sens pour interagir avec ces paramètres (ombak, ngumbang, nggisep, +++) ET/OU autres parametres auxquel j,ai pas pensé.. genre?
-					//TODO: préprogrammer dequoi qui fait du sens pour démontrer le problème, mais à changer avec les monde au fil des discussions.
-					//TODO:faire un patch qui démontre cette relation? à titre démo?
-					//???? faire un menu déroulant comme pour les synths pour choisir des presets de relations d'ombak ngumbag/isep???????????? TODO: demander à ARYa
+
+					//???? faire un menu déroulant comme pour les synths pour choisir des presets de relations d'ombak ngumbag/isep???????????? TODO: demander à Yogi
 				\amp, vel * c.amp[instrNo],
 				\dur, c.dur[instrNo],
 				\atk, c.atk[instrNo],
 				\curve, (c.curve[instrNo]) * (-1),//have to receive as positive (inverted) val, reversed in the synthdefs
+				\pan, pan,
 				]);
 			};
 
@@ -336,6 +526,7 @@ OSCdef.new(
 				\dur, c.dur[instrNo],
 				\atk, c.atk[instrNo],
 				\curve, (c.curve[instrNo]) * (-1),
+				\pan, pan,
 				]);
 			};
 
@@ -414,431 +605,7 @@ OSCdef.new(
 )
 
 
-
-
-
-//----------------------------------------------------end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-a = Array.with(4, ({arg i; i}));
-a[0];
-
-
-
-
-//TODO: a implementer pour Instrument
-//deleteInstr
-//addInstr
-// make functions
-
-//TODO: rendre les vals d'instr accessibles
-//Avoir accès à instr[i] comme var globale, setter ET getter? définir la variable (une liste) dans la fonction .do?
-
-//instr[0] = (instrV[i], -label-, synthmenu[i], instrSave[i], -ratiolabel-, ratioSlider[i], ratioNumBox[i], -durLabel-, durSlider[i], durNumBox[i], -curvelabel-, curveSlider[i], curveNumbox[i], env[i], -amp label-, ampSlider[i])
-
-
-d = Dictionary.new;
-d;
-l=List.with(55,66,88,99,77,11);
-m=List.with(88,99,100,111);
-n=List.with(1000,2000,3000);
-o=Slider(Window.new, 0,0,20,100);
-p=Slider(Window.new,0,20,20,100);
-
-d = Dictionary.newFrom(List.with(\instrument0, l, \instrument1, m, \instrument2, n));
-//Put values at a key
-d.put(\instrument0, l);
-d.put(\instrument1, m);
-d.put(\instrument2, n);
-//Get values at many keys
-d.atAll([\instrument0, \instrument2]);
-//get value at one key
-d.at(\instrument1);
-//make a dictionary to hold dictionaries
-e = Dictionary.new;
-e.put(\dictionary0, d);
-f = Dictionary.new;
-f.put(\slider0, o);
-f.put(\slider1, p);
-d;
-e.put(\dictionary1, f);
-e;
-
-u=List.with(d,e,f);
-u[2];
-
-//keys for each instr dict: instrV, label, synthMenu, instrSave, ratioLavbel, ratioSlider, ratioNumBox, durLabel, durSlider, durNumBox, curveLabel, curveSlider, curveNumBox, env, ampLabel, ampSlider
-
-//each .do instr is a dictionary, with a function to update?
-~instrDict = Dictionary.new;
-~instr1 = Dictionary.new;
-
-//args
-~instrV = CompositeView(Window.new, Rect(0,160, 440, 150));
-~label = StaticText(~instrV, Rect(0,0,100,20));
-/*
-				.string_("Instrument" ++ i.asString)
-				.font_(Font("Monaco", 18))
-				.align_(\left)
-				.background_(Color(1,1,1,0))
-				.stringColor_(Color.white);
-*/
-
-~instr1.
-//Put initial vals at their keys for one instrument
-~instr1.putPairs([\instrV,~instrV, \label, ~label, \synthMenu, ]);
-//TODO: get/generate name of key in instrDict and use it as \label
-
-(
-var scroll = ScrollView(bounds:Rect(0,0,300,300).center_(Window.availableBounds.center));
-var canvas = View();
-var layout;
-var i = 0;
-
-var makeEntry = {
-    var view = View().background_(Color.rand).layout_(
-        HLayout(
-            TextField().string_( ("This is entry number " + i.asString) ),
-            Button().states_([["Delete"]]).action_({view.remove; i = i - 1;})
-        )
-    );
-    i = i + 1;
-    view;
-};
-
-layout = VLayout();
-layout.add ( View().background_(Color.black).layout_(
-    HLayout(
-        Button().states_([["Add"]]).action_({ layout.insert(makeEntry.(), i) }),
-        nil // stretch remaining empty space
-    )
-));
-
-canvas.layout = layout;
-10.do { canvas.layout.add( makeEntry.() ) };
-canvas.layout.add(nil); // stretch remaining empty space
-
-scroll.canvas = canvas;
-scroll.front;
-)
-
-
-
-
-
-//save
-//TODO: faire un save
-// if extension https://github.com/supercollider-quarks/JITLibExtensions
-//.writeArchive
-//.readArchive
-//fait une methose write: ave automatique ds folder SC du projet? de la classe? ou save window
-//une methode read
-(
-a = Array.fill(100, { 100.rand });
-a.writeArchive(PathName.tmp ++ "myArray");
-b = Object.readArchive(PathName.tmp ++ "myArray");
-a == b; // true
-)
-
-
-
-
-
-
-
-
-
-
-
-//Envelope!
-
-Use as envelope view
-
-(
-// use shift-click to keep a node selected
-w = Window("envelope", Rect(150 , Window.screenBounds.height - 250, 250, 100)).front;
-w.view.decorator = FlowLayout(w.view.bounds);
-​
-b = EnvelopeView(w, Rect(0, 0, 230, 80))
-    .drawLines_(true)
-    .selectionColor_(Color.red)
-    .drawRects_(true)
-    .resize_(5)
-    .step_(0.01)
-    .action_({arg b; [b.index, b.value].postln})
-    .thumbSize_(5)
-.grid_(Point(0.1,0.1))
-.gridOn_(true)
-.setEditable(0,false);
-.setEnv(Env.perc(attackTime: 0.01, releaseTime:1.0, level: 1.0, curve: -10.0));
-    //.value_([[0.0, 0.1, 0.5, 1.0],[0.1,1.0,0.8,0.0]]);
-w.front;
-)
-​
-// show grid
-b.grid = Point(0.1, 0.1);
-b.gridOn_(true);
-​
-// show Env
-b.setEnv(Env.asr(0.5,1, 0.2));
-b.setEnv(Env.perc(0.5,1, 0.2));
-​
-// make the first point unmoveable
-(
-b.setEditable(0,false);
-)
-Use shift click to select/unselect the points
-
-(
-w = Window("envelope", Rect(150 , Window.screenBounds.height - 250, 400, 150)).front;
-w.view.decorator = FlowLayout(w.view.bounds);
-​
-b = EnvelopeView(w, Rect(0, 0, 350, 100))
-    .thumbSize_(5)
-    .drawLines_(true)
-    .fillColor_(Color.green)
-    .selectionColor_(Color.red)
-    .drawRects_(true)
-    .value_([(0.0, 0.1 .. 1.0), (0.0, 0.1 .. 1.0)])
-    .setEditable(0,false);
-)
-​
-(
-r = Routine({
-    var j = 0;
-    20.do({ arg i;
-        b.selectIndex((b.size - 1).rand.abs);
-        0.1.wait;
-        b.x_(1.0.rand.abs);
-        b.y_(1.0.rand.abs);
-    });
-    b.selectIndex(-1);
-});
-AppClock.play(r);
-)
-Show boxes with a string in it:
-
-(
-a = Window("text-boxes", Rect(200 , 450, 450, 450));
-a.view.decorator = FlowLayout(a.view.bounds);
-​
-b = EnvelopeView(a, Rect(0, 0, 440, 440))
-    .thumbWidth_(60.0)
-    .thumbHeight_(15.0)
-    .drawLines_(true)
-    .drawRects_(true)
-    .selectionColor_(Color.red)
-    .value_([[0.1, 0.4, 0.5, 0.3], [0.1, 0.2, 0.9, 0.7]]);
-4.do({arg i;
-    b.setString(i, ["this", "is", "so much", "fun"].at(i));
-    b.setFillColor(i,[Color.yellow, Color.white, Color.green].choose);
-});
-a.front;
-)
-​
-(
-b.connect(3, [2.0,0.0,1.0]); // the text objects can be connected
-b.connect(0,[2.0,3.0,1.0]);
-)
-
-
-
-
-
-
-
-
-
-
-//*************
-
-
-(
-// something to meter
-s.waitForBoot({
-b = Buffer.read(s, Platform.resourceDir +/+ "sounds/a11wlk01.wav");
-
-    x = {
-        var colum, noise, imp, delimp, mul = 1;
-    imp = Impulse.kr(10);
-    delimp = Delay1.kr(imp);
-    colum = PlayBuf.ar(1, b, BufRateScale.kr(b), loop: 1) * mul;
-    // measure rms and Peak
-    SendReply.kr(imp, '/levels', [Amplitude.kr(colum), K2A.ar(Peak.ar(colum, delimp).lag(0, 3))]);
-    colum;
-}.play;
-
-    a = LevelIndicator(bounds:Rect(100, 100, 100, 400)).front;
-    a.onClose_({ x.free; o.free; });
-o = OSCFunc({arg msg;
-    {
-        a.value = msg[3].ampdb.linlin(-40, 0, 0, 1);
-        a.peakLevel = msg[4].ampdb.linlin(-40, 0, 0, 1);
-    }.defer;
-}, '/levels', s.addr);
-})
-)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		3.do{
-			arg i;
-		//Synth menu
-			PopUpMenu(window, Rect(xyInstr[0]+(gap/4),xyInstr[1]+40 + (i*40) ,190,30))
-		.items_(synthNames);
-		};
-
-
-
-
-
-(
-var colors = [Color.blue, Color.red, Color.green];
-a = Window.new;
-q = 3;
-
-b = Button(a, Rect(0, 0, 160, 20));
-
-b.states = Array.fill(q, { arg i;
-    [i.asString, Color.white, colors.wrapAt(i)]
-});
-
-b.action = { arg butt;
-    p.visible = false;
-    p = c.at(butt.value);
-    p.visible = true;
-};
-
-c = Array.fill(q, { arg i;
-    b = CompositeView(a, Rect(0, 25, 300, 300));
-    b.background = colors[i].alpha_(0.2);
-    b.visible = false;
-    b;
-});
-
-5.do{ arg i; Slider(c[0], Rect(10, i * 30 + 10, 150, 25)).value_(1.0.rand) };
-5.do{ arg i; Slider(c[1], Rect(i * 30 + 10, 10, 25, 150)).value_(1.0.rand) };
-Slider2D(c[2], Rect(10, 10, 155, 150)).x_(1.0.rand).y_(1.0.rand);
-
-p = c.at(0); // previous
-p.visible = true; // show first one
-
-a.front;
-)
-
-
-
-
-
-(
-w = Window.new.front;
-v = CompositeView.new(w, w.view.bounds.insetBy(10)).background_(Color.rand);
-v.decorator = FlowLayout(v.bounds);
-
-l = "SUPERCOLLIDER".scramble;
-t = Array.fill(9, {arg i; var n, r, q;
-    n = CompositeView.new(v, Rect(20, 20, 121, 121)).background_(Color.rand);
-    q = StaticText(n, n.bounds.moveTo(0,0).insetBy(25)).string_(l[i]).align_(\center);
-    q.enabled = true;
-    q.font = Font("Geneva", 10);
-    q.background_(Color.rand);
-    q.mouseDownAction = {
-        n.background_(Color.rand);
-        q.font=q.font.size_(5 + q.font.size + 7 % 60)
-    };
-});
-)
-
-
-
-
-
-Array.fill(~nbNotes, {arg i; if((c.ombak + ~ombakFunc[i])­>0, (c.ombak + ~ombakFunc[i]), 0)});//Fill ombak with input vals
-
-
-
-
-
-
-(
-a = ~ombakFunc.plot;
-//a.parent =
-a.minval = -5;
-a.maxval = 5;
-a.editMode = true;
-)
-~ombakArr = Array.fill(~nbNotes, {arg i; if((c.ombak + a.value[i])­>0, (c.ombak + a.value[i]), 0)});
-a.value;
-
-
-
-
-
-
-
-//Mettre ces values dans un plot
-a = Plotter("test", Rect(600,30,800,250));
-a.value = ~ombakArr;
-a.value_;
-
-
-// using plotter as a control interface
-(
-a = (0..10).scramble.normalize(300, 400).plot;
-a.specs = \freq; a.plotMode = \points;
-a.editMode = true;
-x = { SinOsc.ar(\freq.kr(a.value)).mean * 0.1 }.play;
-a.editFunc = { |plotter, plotIndex, i, val|
-    x.setn(\freq, a.value)
-};
-a.parent.onClose = { x.release };
-);
-
-
-(
-a = Plotter("the plot", Rect(600, 30, 600, 400));
-a.value = (0..100).normalize(0, 8pi).sin;
-)
-
-(
-a = Plotter("the plot", Rect(600, 30, 800, 250));
-a.value = (0..1000).normalize(0, 14pi).curdle(0.01).scramble.flat.sin;
-)
-
-
+//----------------------------------------------------TERAKHIR
 
 
 

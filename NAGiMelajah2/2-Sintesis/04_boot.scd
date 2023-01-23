@@ -2,11 +2,24 @@
 //Ctl + . : matikan suara
 
 
+// Sebelum boot, tempel folder GaKo ke jalan ini:
+// Jalan "classes" (kelas) eksternal
+Platform.userExtensionDir;
+
+
 //secara default
 s.boot;
+
 //s = server (mesin)
 
+//Tes
+{SinOsc.ar(330)}.play;
 
+//Lihat OSC
+OSCFunc.trace(true);
+
+
+//--...ekstra
 //-------------------------PERANGKAT----
 //Headphones
 (

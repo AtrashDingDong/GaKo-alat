@@ -7,7 +7,7 @@
 //make colorpicker gui
 //The class will return RGB values, en plus de faire un GUI
 
-//********ICI: try to make so that instr stuff is accessible from outside
+//TODO: try to make so that instr stuff is accessible from outside
 
 GaKoSynth {
 
@@ -24,7 +24,7 @@ GaKoSynth {
 
 	//Override the .new method of the parent (Object). We talk to the parent by saying ^super
 	*new {
-		arg nbNotes=5, nbInstr=3;//Starts with default nb of notes 7
+		arg nbNotes=5, nbInstr=3;//Starts with default nb of notes 5
 		^super.new.make(nbNotes, nbInstr);
 
 	}//new INSTANCE of the superclass
@@ -71,7 +71,10 @@ GaKoSynth {
 
 
 		gamNames = Array.with('-Memilih gamelan-','gongKebyar','gambang','gelombang','test1','test2','test3','test4','test5','test6','test7','test8','test9');//TODO: ajouter selonding, rindik
-		synthNames = Array.with('-Memilih Synth-','gelombang_sine','gelombang_segitiga','gelombang_gigiGergaji','gelombang_kebisingan','gam_gangsa1','gam_jublag','gam_jegog','gam_cengceng','gam_gong1','gam_saron1','gam_saron2','gam_saron3','gam_cungklik1','gam_cungklik2','gam_besih1','gam_reyong1','gong_diamSibuk','gong_tangisanBumi','pukul_pocongTinggi','pukul_waletTersesat','pukul_nasiPutih','test1','test2','test3','test4','test5','test6','test7','test8','test9');
+		synthNames = Array.with('-Memilih Synth-','gelombang_sine','gelombang_segitiga','gelombang_gigiGergaji','gelombang_kebisingan','gam_cungklik1', 'gam_gender1','gam_gender2','gam_gong1','gam_gong2','gam_jegog1','gam_jegog2','gam_kempur1','gam_kempur2','gam_saron1', 'gam_saron2','gam_terompong1','gam_terompong2','gong_diamSibuk','gong_tangisanBumi','pukul_pocongTinggi','pukul_waletTersesat','pukul_nasiPutih','test1','test2','test3','test4','test5','test6','test7','test8','test9');
+
+		//TODO: add sounds
+	//'gam_gangsa1','gam_jublag','gam_cengceng','gam_saron3','gam_cungklik2','gam_besih1','gam_reyong1',
 
 		//Initialize arrays and lists
 		ombak = 10;

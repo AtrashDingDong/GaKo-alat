@@ -12,3 +12,6 @@ gambangAMT/soundfiles/**/penyuud/
 # Ignore kilitan 2 and 3
 gambangAMT/soundfiles/**/kilitan/semtk2_kilitan2_*.wav
 gambangAMT/soundfiles/**/kilitan/semtk2_kilitan3_*.wav
+
+# Ignore Toth spreadsheets
+NAGiMelajah2/2-Sintesis/TothGongKebyarSpreadsheets/
