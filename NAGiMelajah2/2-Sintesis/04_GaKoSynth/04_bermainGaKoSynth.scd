@@ -1,47 +1,31 @@
+// GaKoSynth adalah sebuah sistem untuk menerima pesan2 dari Pure Data untuk menjadi suara sintesis
+// v. 0.0.2 2023-01-28, Sarah Lecompte-Bergeron
 
+// 1. Install "class" (obyek) GaKoSynth
 // Jalan "classes" (kelas) eksternal
 // Taruh GaKoSynth.sc di dalam folder itu
 Platform.userExtensionDir;
 //Ctl + Shift + L untuk recompile kalau ada masalah
 
-//TODO: mettre la classe dans le dossier local, tout local, rien système
-//TODO: create helpfiles .schelp
-//TODO: check language .id
-//TODO: instr accessible from outside
-//TODO: add pan
-//TODO: setter from outside c.saih_
-//TODO: GUI reste pas au dessus
+//2. Boot server (mesin suara)
+//secara default
+s.boot;
+//s = server (mesin)
+//Tes (Ctl + enter untuk hidupkan, Ctl + . untuk matikan)
+{SinOsc.ar(330)}.play;
 
-c.saih;
-c.ombak;
-c.ombakArr;
-c.synth;
-c.ratio;
-c.atk;
-c.dur;
-c.curve;
-c.amp;
-c.instr[8];
-~instrTest = c.instr[8].at(\ratioSlider);
-~instrTest.value;
-this.inspect;
+//Kalau tidak ada suara, coba mengganti output
+//Contoh headphones
+(
+~nbOutputs = 2;
+s.options.numOutputBusChannels = ~nbOutputs;
+//s.options.inDevice_("MME : Microphone Array");
+s.options.outDevice_("MME : Headphones (Realtek(R) Audio)");
+//Server.local.options.sampleRate = 48000;
+s.boot;
+)
 
-c.nbInstr;//TODO: faire methode pour retourner le nb instr (tracks)
-c.nbNotes;//TODO: faire une methode pour retourner le nbNotes quand on le change de dedans le GUI
-c.close;
-
-//ca ca marche pas, message .saih_ not understood. peut set and get de l'extérieur? ou juste get?
-c.saih_([20,21,22,23,24,25,26,27,28,29]);
-
-//TODO: output option: to SC. to Reaper? si to Reaper, peut send les stems vers des tracks séparées = FX, record. Sinon, record à partir des options SC: server/start recording. OU faire avec s.record(numChans); look into ReaRoute? stuff
-//TODO: faire un mixer général? un compresseur/limiteur général?
-
-//*****************************MULAI******************MULAI*********************MULAI************************MULAI***************************************
-//1. Coba GaKoSynth.new
-GaKoSynth.new;
-//2. Coba GaKoSynth.new(..,..)
-GaKoSynth.new(30,10);
-
+//3. Buka sintesis (Ctl + enter didalam kurung ini)
 (
 ~nbOutputs = 2;
 ~nbNotes = 10;
@@ -605,7 +589,38 @@ OSCdef.new(
 )
 
 
-//----------------------------------------------------TERAKHIR
+//----------------------------------------------------TERAKHIR------------------------------------------
 
 
+//TODO: mettre la classe dans le dossier local, tout local, rien système
+//TODO: create helpfiles .schelp
+//TODO: check language .id
+//TODO: instr accessible from outside
+//TODO: add pan
+//TODO: setter from outside c.saih_
+//TODO: GUI reste pas au dessus
+
+c.saih;
+c.ombak;
+c.ombakArr;
+c.synth;
+c.ratio;
+c.atk;
+c.dur;
+c.curve;
+c.amp;
+c.instr[8];
+~instrTest = c.instr[8].at(\ratioSlider);
+~instrTest.value;
+this.inspect;
+
+c.nbInstr;//TODO: faire methode pour retourner le nb instr (tracks)
+c.nbNotes;//TODO: faire une methode pour retourner le nbNotes quand on le change de dedans le GUI
+c.close;
+
+//ca ca marche pas, message .saih_ not understood. peut set and get de l'extérieur? ou juste get?
+c.saih_([20,21,22,23,24,25,26,27,28,29]);
+
+//TODO: output option: to SC. to Reaper? si to Reaper, peut send les stems vers des tracks séparées = FX, record. Sinon, record à partir des options SC: server/start recording. OU faire avec s.record(numChans); look into ReaRoute? stuff
+//TODO: faire un mixer général? un compresseur/limiteur général?
 
