@@ -1,4 +1,4 @@
-#N canvas 2695 1183 1920 976 12;
+#N canvas 49 64 1920 864 12;
 #X text 599 347 cetak;
 #X floatatom 602 271 5 0 0 0 - - - 0;
 #X obj 602 101 vsl 19 162 20 2000 0 0 empty empty Kecepatan 0 -9 0 12 #c6ffc7 #000000 #000000 0 1;
