@@ -1,0 +1,20 @@
+Cara membuat analisa sample gamelan
+
+Kita ingin taruh analisa frekuensi di file .csv
+1. Merekam satu pukulan gamelan
+2. Merapikan rekaman sampai menjadi sample di DAW. 
+	Boleh pakai Reaper (unduh gratis): https://www.reaper.fm/download.php
+	Cara mebuat siapkan suara untuk sample: https://youtu.be/tIoZNZAYw2U
+3. Unduh aplikasi Spear (Sinusoidal Partial Editing Analysis and Resynthesis):
+ https://www.klingbeil.com/spear/downloads/
+4. ANALISA:
+	-Frequency resolution: 50 Hz
+	-Min amp thresh: -70 dB
+	-Amp thresh -40 dB
+5. Edit sampai tidak terlalu banyak partial
+6. EXPORT
+	-Export format: text, partials
+7. Buka di Notepad++. 
+	-Klik: search/replace
+	-Replace with: spasi ( ), dengan koma (,)
+	-Simpan as .csv
