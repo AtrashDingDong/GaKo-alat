@@ -21,7 +21,7 @@ s.boot;
 s.options.numOutputBusChannels = ~nbOutputs;
 //s.options.inDevice_("MME : Microphone Array");
 s.options.outDevice_("MME : Headphones (Realtek(R) Audio)");
-//Server.local.options.sampleRate = 48000;
+Server.local.options.sampleRate = 48000;
 s.boot;
 )
 
@@ -29,7 +29,7 @@ s.boot;
 (
 ~nbOutputs = 2;
 ~nbNotes = 10;
-~nbInstr = 4;
+~nbInstr = 6;
 
 c = GaKoSynth.new(~nbNotes, ~nbInstr);
 //TODO: initialiser le saih ici? c.saih_?
