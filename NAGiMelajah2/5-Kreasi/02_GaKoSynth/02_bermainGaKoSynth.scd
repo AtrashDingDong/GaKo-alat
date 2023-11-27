@@ -29,7 +29,7 @@ s.boot;
 (
 ~nbOutputs = 2;
 ~nbNotes = 10;
-~nbInstr = 6;
+~nbInstr = 2;
 
 c = GaKoSynth.new(~nbNotes, ~nbInstr);
 //TODO: initialiser le saih ici? c.saih_?
